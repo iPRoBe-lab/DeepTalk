@@ -1,0 +1,59 @@
+
+.loader {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border: 16px solid blue;
+    border-radius: 50%;
+    border-top: 16px solid lightblue;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+    0% {transform: rotate(0deg);}
+    100% {transform: rotate(360deg);}
+}
+
+@keyframes spin {
+    0% {transform: rotate(0deg);}
+    100% {transform: rotate(360deg);}
+}
+
+
+.gone {
+    display: none;
+}
+
+/* Image and POST request */
+
+form {
+    margin: 0 2em auto;
+}
+
+.image-holder {
+    margin: 10px;
+    display: inline-block;
+    text-align: center;
+    size: 0.5em;
+    background-color: lightblue;
+    border: 1px solid white;
+    border-radius: 5px;
+    height: 200px;
+
+}
+
+.img-loader {
+    opacity: 0.5;
+    border: 16px solid blue;
+    border-top: 16px solid lightblue;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+    margin: auto;
+}
+

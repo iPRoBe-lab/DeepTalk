@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='UTF-8'>
+
+    <title>Chatbot</title>
+
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="static/stylesheets/chat.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-light-blue">
+
+
+    <div class="container mx-auto center">
+
+        <div class="card bg-light">
+            <div class="card-header"><img src="static/images/watson_avatar.png" /><b>Chatbot</b></div>
+            <div class="card-body">
+                <div class="messages">
+                    <ul></ul>
+                </div>
+            </div>
+            <div class="card-footer">
+
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Write your message..." id='q' dir='auto'>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id='submit'><i
+                                class="fa fa-paper-plane"></i></button>
+                        <button class="btn btn-outline-secondary" type="button" id='audio'><i
+                                class="fa fa-paperclip attachment"></i></button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="static/javascript/chat.js" type="text/javascript"></script>
+
+</body>
+
+</html>

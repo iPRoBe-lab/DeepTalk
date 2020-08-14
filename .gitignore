@@ -1,0 +1,76 @@
+# .mat files
+*.mat
+
+# .h5 files
+*.h5
+
+# .csv files
+*.csv
+*.tsv
+
+# archives
+*.tar
+*.zip
+
+# Annotation files
+*.lab
+*.TextGrid
+
+
+# Matlab figures and images
+*.fig
+*.pdf
+*.eps
+*.jpg
+*.jpeg
+
+# Audio files
+*.wav
+*.WAV
+*.mp3
+*.flac
+
+# data directory
+Data/
+
+#trained_models directory
+trained_models/
+
+#uploads directory
+uploads/
+
+# Pytorch models
+*.pt
+
+# Tensorflow models
+*.data*
+*.index
+*.meta
+events.*
+
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk

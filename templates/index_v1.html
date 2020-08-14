@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>DeepTalk App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+</head>
+
+
+<body>
+
+  <div class="container" style="min-height:100% width:80%">
+	{% with messages = get_flashed_messages() %}
+	  {% if messages %}
+	    {% for message in messages %}
+		  <div class="alert alert-warning alert-dismissible" role="alert">
+		  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+			{{message}}
+		  </div>
+		{% endfor %}
+	  {% endif %}
+	{% endwith %}
+
+	{% block body %}{% endblock %}<!DOCTYPE html>
+  <html lang="en">
+  
+  <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta Http-Equiv="Cache-Control" Content="no-cache">
+      <meta Http-Equiv="Pragma" Content="no-cache">
+      <meta Http-Equiv="Expires" Content="0">
+      <meta Http-Equiv="Pragma-directive: no-cache">
+      <meta Http-Equiv="Cache-directive: no-cache">
+      <title>Deep Talk</title>
+  
+      <!-- Bootstrap -->
+      <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> -->
+      <link href="static/stylesheets/styles.css" rel="stylesheet">
+      <link href="static/css/bootstrap.css" rel="stylesheet">
+  
+      <style>
+        audio {
+        filter: sepia(20%) saturate(70%) grayscale(1) contrast(99%) invert(12%);
+        width: 300px;
+        height: 38px;
+        position: relative;
+        left: 100px;
+      }
+      .navbar-dark{
+      background-color:#18453B;
+      border-color: #0DB14B;
+      }
+      .progress-bar {
+        background-color: #18453B;
+      }
+      </style>
+  
+  
+  
+  </head>
+  
+  <body>
+  
+      <nav class="navbar navbar-dark navbar-fixed-top">
+          <a class="navbar-brand" href="#">Deep Talk</a>
+          <a class="navbar-brand" href="https://msu.edu/">
+            <img src="static/images/MSU-Wordmark-White-120-pxls.gif" alt="">
+          </a>
+          <a class="navbar-brand" href="https://iprobe.cse.msu.edu/index.php">
+            <img style="width:120px;" src="static/images/iprobelogo_white.png" alt="">
+          </a>
+  
+  
+      </nav>
+  
+  
+      <div class="container" style="min-height:100% width:80%">
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-warning alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+          {{message}}
+          </div>
+        {% endfor %}
+        {% endif %}
+      {% endwith %}
+  
+      {% block body %}{% endblock %}
+      </div>
+  
+      <script>
+        function change_audio(e) {
+        var audio = document.getElementById('audioPlayer');
+        var source = document.getElementById('audioSource');
+        var e = document.getElementById("file_dropdown").value ;
+        uploads_dir = '{{ upload_folder }}';
+        model_dir = '{{ model_folder }}';
+        // ref_img_file = '{{ref_melspec_img}}';
+        // syn_img_file = '{{syn_melspec_img}}';
+        // document.getElementById("demo").innerHTML = uploads_dir.concat('/').concat(e)
+        source.src = uploads_dir.concat('/').concat(e).concat('.wav')
+        // source.src = 'uploads/hannah_ref.wav'
+        // alert(source.src);
+        document.getElementById("ref_audio_name").value= uploads_dir.concat('/').concat(e).concat('.wav')
+        document.getElementById("enc_name").value= model_dir.concat('/').concat(e).concat('/Encoder/model_GST.pt')
+        document.getElementById("syn_name").value= model_dir.concat('/').concat(e).concat('/Synthesizer/logs-model_GST_ft/taco_pretrained/')
+        document.getElementById("voc_name").value= model_dir.concat('/').concat(e).concat('/Vocoder/model_GST_ft/model_GST_ft.pt')
+        // document.getElementById("ref_img").value = ref_img_file
+        // document.getElementById("syn_img").value = syn_img_file
+        // alert(document.getElementById("ref_img").value)
+        // alert(document.getElementById("syn_img").value)
+        audio.load(); //call this to just preload the audio without playing
+        // audio.play(); //call this to play the song right away
+      };
+      var source = new EventSource("/progress");
+      source.onmessage = function(event) {
+        $('.progress-bar').css('width', event.data+'%').attr('aria-valuenow', event.data);
+        $('.progress-bar-label').text(event.data+'%');
+  
+        if(event.data == 100){
+          source.close()
+        }
+      }
+  
+      </script>
+  
+      <br>
+  
+          <h3 id="text-result">Choose Speaker Model</h3>
+  
+          <div style= "float:right; position: relative; left: -5%;">
+            <figure>
+              <img id = "ref_img" src="{{ref_melspec_img}}" style="width:80%" alt="Reference Audio Melspectrogram">
+              <figcaption>Fig.1 - Melspectrogram: Reference Audio</figcaption>
+            </figure>      
+            <figure>
+              <img id = "syn_img" src="{{syn_melspec_img}}" style="width:80%" alt="Synthetic Audio Melspectrogram">
+              <figcaption>Fig.2 - Melspectrogram: Synthetic Audio</figcaption>
+            </figure>    
+          </div>
+  
+            <div class="row justify-content-md-left">
+            <div style= "float:left; position: relative; left: 5%;">
+            <select class="btn btn-secondary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" id = "file_dropdown" name="uploaded_file" onchange="change_audio();" onfocus="this.selectedIndex = -1;" method="GET" action="/">
+            <option value="{{uploaded_files[0]}}" selected>{{uploaded_files[0]}}</option>
+            {% for uploaded_file in uploaded_files[1:] %}
+              <option value="{{uploaded_file}}">{{uploaded_file}}</option>
+            {% endfor %}
+            </select>
+            </div>
+  
+            <div style= "float:right;">
+            <audio id="audioPlayer" controls>
+                <source id="audioSource" src="" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+            </div>
+            </div>
+  
+            <br>
+            <br>
+  
+  
+  
+          <div class="row justify-content-md-left">
+              <div class="col" id="results">
+                  <h3 id="text-result">Target Text</h3>
+                  <div style= "float:left; position: relative; left: 1%;">
+                  <form method=post>
+                    <textarea id="target_text" name="target_text_form" rows="15" cols="100">  {{target_text}} </textarea>
+                    <br>
+                    <input id="csv-sample" class="btn btn-primary" type=submit value=Upload >
+                  </form>
+                  </div>
+              </div>
+          </div>
+  
+          <br>
+          <br>
+  
+  
+          <h3 id="text-result">Generate synthetic audio</h3>
+          <div class="row justify-content-md-left">
+          <div style= "float:left; position: relative; left: 2%;">
+          <form method=post>
+            <textarea id="ref_audio_name" name="target_text_form2" rows="1" cols="50" readonly style="display:none;"></textarea>
+            <textarea id="enc_name" name="target_text_form3" rows="1" cols="50" readonly style="display:none;"></textarea>
+            <textarea id="syn_name" name="target_text_form4" rows="1" cols="50" readonly style="display:none;"></textarea>
+            <textarea id="voc_name" name="target_text_form5" rows="1" cols="50" readonly style="display:none;"></textarea>
+            <input class="btn btn-primary" type=submit value=Generate>
+          </form>
+          </div>
+  
+          <div style= "float:right;">
+          <audio id="audioPlayer_gen" name="audioPlayer_gen" controls>
+              <source id="audioSource_gen" src="uploads/ref_gen.wav" type="audio/wav">
+            Your browser does not support the audio element.
+          </audio>
+          </div>
+          </div>
+  
+          <!-- <div style= "float:right; position: relative; left: -5%;">
+            <figure>
+              <img id = "syn_img" src="{{syn_melspec_img}}" style="width:80%" alt="Synthetic Audio Melspectrogram">
+              <figcaption>Fig.1 - Melspectrogram: Reference Audio </figcaption>
+            </figure>          
+          </div> -->
+  
+          
+  
+  
+  
+  
+      </div>
+  
+  
+  
+      <br>
+      <br>
+  
+      <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.8.9/jquery.csv.js" type="text/javascript"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+      <script src="static/javascript/main.js" type="text/javascript"></script>
+      </script>
+  </body>
+  
+  </html>
+  
+	</div>
+
+
+  <script>
+    function change_audio(e) {
+    var audio = document.getElementById('audioPlayer');
+    var source = document.getElementById('audioSource');
+    var e = document.getElementById("file_dropdown").value ;
+    uploads_dir = '{{ upload_folder }}';
+    // document.getElementById("demo").innerHTML = uploads_dir.concat('/').concat(e)
+    source.src = uploads_dir.concat('/').concat(e)
+    document.getElementById("target_text2").value= uploads_dir.concat('/').concat(e)
+    audio.load(); //call this to just preload the audio without playing
+    // audio.play(); //call this to play the song right away
+  };
+
+
+
+  </script>
+
+  <h1>Upload new speech audio</h1>
+    <form method=post enctype=multipart/form-data>
+      <input type=file name=file>
+      <input type=submit value=Upload>
+    </form>
+
+  <h1>Choose speech audio for template creation</h1>
+    <select id = "file_dropdown" name="uploaded_file" onchange="change_audio();" onfocus="this.selectedIndex = -1;" method="GET" action="/">
+    <option value="{{uploaded_files[0]}}" selected>{{uploaded_files[0]}}</option>
+    {% for uploaded_file in uploaded_files[1:] %}
+      <option value="{{uploaded_file}}">{{uploaded_file}}</option>
+    {% endfor %}
+    </select>
+
+    <audio id="audioPlayer" controls>
+        <source id="audioSource" src="" type="audio/wav">
+      Your browser does not support the audio element.
+    </audio>
+
+  <h1>Target Text</h1>
+  <form method=post>
+    <textarea id="target_text" name="target_text_form" rows="15" cols="100">  {{target_text}} </textarea>
+    <input type=submit value=Upload>
+  </form>
+
+
+  <h1>Generate synthetic audio</h1>
+    <form method=post>
+      <input type=submit value=Generate>
+
+      <h3>Selected target speaker</h3>
+      <textarea id="target_text2" name="target_text_form2" rows="1" cols="50" ></textarea>
+
+    </form>
+    <audio id="audioPlayer_gen" name="audioPlayer_gen" controls>
+        <source id="audioSource_gen" src="uploads/ref_gen.wav" type="audio/wav">
+      Your browser does not support the audio element.
+    </audio>
+
+
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+
+</body>
+</html>

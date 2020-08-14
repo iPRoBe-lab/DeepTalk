@@ -1,0 +1,105 @@
+
+.bg-light-blue {
+    background: rgb(0, 200, 255);
+}
+
+.card {
+    margin: 5% 0 5%; 
+    height: 85vh;
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.card-header img {
+    margin-right: 5px;
+    height: 2em;
+}
+
+.contact-profile {
+    width: 100%;
+    height: 60px;
+    background: black;
+    color: white
+}
+
+.contact-profile img {
+    width: 40px;
+    border-radius: 50%;
+    float: left;
+    margin: 9px 12px 0 9px;
+}
+
+.contact-profile p {
+    float: left;
+}
+
+.messages {
+    height: auto;
+    min-height: 100%;
+    max-height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.messages::-webkit-scrollbar {
+    width: 8px;
+    background: transparent;
+}
+
+.messages::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.messages ul li {
+    display: inline-block;
+    clear: both;
+    margin: 15px 15px 5px 15px;
+    width: calc(100% - 25px);
+    font-size: 0.9em;
+}
+
+.messages ul li:nth-last-child(1) {
+    margin-bottom: 20px;
+}
+
+.messages ul li.sent img {
+    margin: 6px 8px 0 0;
+}
+
+.messages ul li.sent p {
+    background: rgb(0, 170, 255);
+    color: white;
+}
+
+.messages ul li.replies img {
+    float: right;
+    margin: 6px 0 0 8px;
+}
+
+.messages ul li.replies p {
+    background: rgb(0, 170, 255);
+    color: white;
+    float: right;
+}
+
+.messages ul li img {
+    width: 22px;
+    border-radius: 50%;
+    float: left;
+}
+
+.messages ul li p {
+    display: inline-block;
+    padding: 10px 15px;
+    border-radius: 20px;
+    max-width: 205px;
+    line-height: 130%;
+}
