@@ -18,7 +18,7 @@ The model requires a <reference audio> from a <target speaker> and a <sample tex
 (The GPU versions of pytorch and tensorflow is recommended for faster training and inference)
 
 4) We have included a copy of Montreal-Forced-Aligner (both for Linux and Mac OS) with this repository. However, it is highly recommended to replace them with their latest versions from
-[Montreal-Forced-Aligner](http://www.robots.ox.ac.uk/~vgg/data/voxceleb/)
+[Montreal-Forced-Aligner](https://montreal-forced-aligner.readthedocs.io/en/latest/installation.html#linux)
 
 ## Usage
 
