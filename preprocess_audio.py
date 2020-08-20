@@ -18,6 +18,8 @@ def main(argv):
    
    input_path, output_path = argv[0], argv[1]
 
+#    os.chdir('/scratch2/chowdh51/Code/DeepTalk-Deployment/')
+#    os.getcwd()
 #    input_path = 'Data/SampleAudio'
 #    output_path = 'Data/ProcessedAudio'
    training_data_directory = 'Data/LibriSpeech/train-other-custom'
@@ -68,7 +70,7 @@ def main(argv):
    else:
        print('montreal_forced_aligner directory not found!!')
        sys.exit(2)
-
+ 
    speaker_dir_path = ''
 
    for root, speaker_dirs, files in os.walk(output_path):
@@ -76,11 +78,11 @@ def main(argv):
             speaker_dir_path = os.path.join(output_path, speaker_dir)
             speaker_dir_path_output = os.path.join(output_path+"_chunks", speaker_dir) ## Temp directory for storing output
             alignment_cmd = "yes n | bin/mfa_align "+speaker_dir_path+ " librispeech-lexicon.txt english "+speaker_dir_path_output+" &"
-            # cmd_return = os.popen(alignment_cmd).readlines()
-            # os.system('pkill yes &') ## This ensures the 'yes' process terminates and doesnt keep running in the background
-            # copy_tree(speaker_dir_path_output, speaker_dir_path)  ## Copies the generated .TextGrid files alongside the .lab files in the input directory
-            # rmtree(Path(speaker_dir_path_output).parent)  ## Deletes the Temp direcotry created above
-            # parse_main(Path(speaker_dir_path).parent)  # Combine individual TextGrid files to generate alignment file
+            cmd_return = os.popen(alignment_cmd).readlines()
+            os.system('pkill yes &') ## This ensures the 'yes' process terminates and doesnt keep running in the background
+            copy_tree(speaker_dir_path_output, speaker_dir_path)  ## Copies the generated .TextGrid files alongside the .lab files in the input directory
+            rmtree(Path(speaker_dir_path_output).parent)  ## Deletes the Temp direcotry created above
+            parse_main(Path(speaker_dir_path).parent)  # Combine individual TextGrid files to generate alignment file
             if os.path.exists(training_data_directory):
                 rmtree(training_data_directory)
             copy_tree(Path(speaker_dir_path).parent, training_data_directory)

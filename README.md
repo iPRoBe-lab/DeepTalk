@@ -17,6 +17,9 @@ The model requires a <reference audio> from a <target speaker> and a <sample tex
 3)Run pip install requirements.txt to install the dependencies:
 (The GPU versions of pytorch and tensorflow is recommended for faster training and inference)
 
+4) We have included a copy of Montreal-Forced-Aligner (both for Linux and Mac OS) with this repository. However, it is highly recommended to replace them with their latest versions from
+[Montreal-Forced-Aligner](http://www.robots.ox.ac.uk/~vgg/data/voxceleb/)
+
 ## Usage
 
 **Pre-trained DeepTalk Model**
