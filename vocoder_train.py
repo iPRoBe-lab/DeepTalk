@@ -4,8 +4,8 @@ from pathlib import Path
 import argparse
 import os
 
-def run_custom(run_id, syn_dir, voc_dir, models_dir, ground_truth = True, save_every = 1000, backup_every = 25000, force_restart = False):
-    train(run_id, Path(syn_dir), Path(voc_dir), Path(models_dir), ground_truth, save_every, backup_every, force_restart)
+def run_custom(run_id, syn_dir, voc_dir, models_dir, ground_truth = True, save_every = 1000, backup_every = 25000, force_restart = False,gpu_id='1,2'):
+    train(run_id, Path(syn_dir), Path(voc_dir), Path(models_dir), ground_truth, save_every, backup_every, force_restart,gpu_id='1,2')
 
 def main():
     parser = argparse.ArgumentParser(
@@ -40,7 +40,7 @@ def main():
         "model.")
     parser.add_argument("-f", "--force_restart", action="store_true", help= \
         "Do not load any saved model and restart from scratch.")
-    parser.add_argument("-gpuid", "--gpu_id", type=str, default='0', help= \
+    parser.add_argument("-gpuid", "--gpu_id", type=str, default='1', help= \
         "Select the GPU to run the code")
     args = parser.parse_args()
 

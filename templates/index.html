@@ -157,6 +157,30 @@
         </audio>
         </div>
         </div>
+        
+
+        <br>
+        <br>
+        
+        <h3 id="text-result">Post-process synthetic audio</h3>
+        <div style= "float:left;">          
+          <form method=post>
+            <label for="lspeed">Speed:</label> 
+            <textarea id="ref_audio_name" name="target_text_form6" rows="1" cols="50" readonly style="display:none;"></textarea>
+            <input id="lspeed" name="speed" type="text" size="5" value="1.0"/>
+            <label for="lpitch">Pitch:</label> 
+            <input id="lpitch" name="pitch" type="text" size="5" value="0.0"/>
+            <!-- <label for="ltempo">Tempo:</label> 
+            <input id="ltempo" name="tempo" type="text" size="5" value="1.0"/> -->
+            <input class="btn btn-primary" type=submit value=Process>
+            <!-- <input class="btn btn-primary" type=submit value=Reset> -->
+          </form>
+          <audio id="audioPlayer_gen" name="audioPlayer_gen" controls>
+            <source id="audioSource_gen" src="uploads/ref_gen_modified.wav" type="audio/wav">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        
 
         <!-- <div style= "float:right; position: relative; left: -5%;">
           <figure>

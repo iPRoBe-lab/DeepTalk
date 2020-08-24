@@ -9,7 +9,7 @@ from demo_functions import run_DeepTalk_demo as DeepTalk
 import soundfile as sf
 from pathlib import Path
 from encoder import audio
-
+import librosa as lr
 
 
 os.environ["CUDA_VISIBLE_DEVICES"] = '0,1'
@@ -17,6 +17,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = '0,1'
 UPLOAD_FOLDER = 'uploads'
 MODEL_FOLDER = 'trained_models'
 GENERATED_AUDIO_FILE = 'uploads/ref_gen.wav'
+MODIFIED_AUDIO_FILE = 'uploads/ref_gen_modified.wav'
 REF_MELSPEC_IMG = 'uploads/ref_melspec.png'
 SYN_MELSPEC_IMG = 'uploads/syn_melspec.png'
 TARGET_TEXT_FILE = 'target_text_dir/target_text.txt'
@@ -31,6 +32,7 @@ app.config['ENC_MODULE_NAME'] = ENC_MODULE_NAME
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024 # will limit the maximum allowed payload to 16 megabytes.
 app.config['TARGET_TEXT_FILE'] = TARGET_TEXT_FILE
 app.config['GENERATED_AUDIO_FILE'] = GENERATED_AUDIO_FILE
+app.config['MODIFIED_AUDIO_FILE'] = MODIFIED_AUDIO_FILE
 app.config['REF_MELSPEC_IMG'] = REF_MELSPEC_IMG
 app.config['SYN_MELSPEC_IMG'] = SYN_MELSPEC_IMG
 app.config['SESSION_TYPE'] = 'memcached'
@@ -61,6 +63,20 @@ def upload_file():
 
         print(request.form)
 
+        if 'target_text_form6' in request.form:
+            ref_audio, sr = lr.load(app.config['GENERATED_AUDIO_FILE'], sr=16000)
+            lspeed = float(request.form['speed'])
+            lpitch = float(request.form['pitch'])
+            # ltempo = double(request.form['tempo'])
+            modified_audio = ref_audio
+            if (lspeed != 1):
+                modified_audio = lr.effects.time_stretch(ref_audio, lspeed)
+            if (lpitch != 0):    
+                modified_audio = lr.effects.pitch_shift(modified_audio, sr, n_steps=lpitch)
+
+            sf.write(app.config['MODIFIED_AUDIO_FILE'], modified_audio, sr, 'PCM_24')
+     
+        
         if 'target_text_form2' in request.form:
             # (_, _, uploaded_files) = next(walk(app.config['UPLOAD_FOLDER']))
             (_, uploaded_files, _) = next(walk(app.config['MODEL_FOLDER']))

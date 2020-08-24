@@ -1,5 +1,5 @@
 ## Sample usage:
-# python preprocess_audio.py Data/SampleAudio Data/ProcessedAudio
+# Python preprocess_audio.py Data/SampleAudio Data/ProcessedAudio
 
 import sys, os
 import getopt
@@ -18,10 +18,11 @@ def main(argv):
    
    input_path, output_path = argv[0], argv[1]
 
-#    os.chdir('/scratch2/chowdh51/Code/DeepTalk-Deployment/')
+#    os.chdir('/scratch0/chowdh51/Code/DeepTalk/DeepTalk_Deployment_lite')
 #    os.getcwd()
 #    input_path = 'Data/SampleAudio'
 #    output_path = 'Data/ProcessedAudio'
+
    training_data_directory = 'Data/LibriSpeech/train-other-custom'
 
    if (not(input_path) or not(output_path)):
@@ -31,6 +32,7 @@ def main(argv):
        print('----------------------------------------------------')
        sys.exit(2)
        
+    
    # Check if input path is a valid directory
    if not os.path.exists(input_path):
        print('Input directory not found!!')
@@ -50,7 +52,7 @@ def main(argv):
    print('Input path is:', input_path)
    print('Output path is:', output_path)
 
-   split_audio_main(input_path, output_path) ## Split the audio into smaller chunks and run speech recognition on them.
+#    split_audio_main(input_path, output_path) ## Split the audio into smaller chunks and run speech recognition on them.
 
    print('------------------Stage 1 Complete-------------------')
 
@@ -68,9 +70,10 @@ def main(argv):
    if os.path.exists(mfa_dir):
        os.chdir(mfa_dir)
    else:
+       print(os.getcwd())
        print('montreal_forced_aligner directory not found!!')
        sys.exit(2)
- 
+
    speaker_dir_path = ''
 
    for root, speaker_dirs, files in os.walk(output_path):
@@ -83,8 +86,7 @@ def main(argv):
             copy_tree(speaker_dir_path_output, speaker_dir_path)  ## Copies the generated .TextGrid files alongside the .lab files in the input directory
             rmtree(Path(speaker_dir_path_output).parent)  ## Deletes the Temp direcotry created above
             parse_main(Path(speaker_dir_path).parent)  # Combine individual TextGrid files to generate alignment file
-            if os.path.exists(training_data_directory):
-                rmtree(training_data_directory)
+            rmtree(training_data_directory)
             copy_tree(Path(speaker_dir_path).parent, training_data_directory)
             rmtree(output_path)
         break ## This prevents the loop from processing the directories it just created, thereby avoiding an endless loop.
@@ -101,7 +103,7 @@ def main(argv):
    print('------------------Stage 2 Complete-------------------')
 
    print('Run the following command to start fine-tuning the model on the pre-processed data:')
-   print('python train_DeepTalk.py ' + speaker_dir_path)
+   print('Python train_DeepTalk.py ' + speaker_dir_path)
    print('----------------------------------------------------')
 
 
