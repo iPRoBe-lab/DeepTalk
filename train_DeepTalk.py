@@ -11,7 +11,7 @@ from synthesizer_train import run_custom as syn_train
 from vocoder_preprocess import run_custom as voc_prep
 from vocoder_train import run_custom as voc_train
 from shutil import rmtree
-
+import time
 def main(argv):
 
     # print(argv)
@@ -63,37 +63,38 @@ def main(argv):
             break
         break
     
-    copy_tree(generic_model_path, finetuned_model_path)
-    os.rename(os.path.join(finetuned_model_path, 'Synthesizer', 'logs-model_GST'), os.path.join(finetuned_model_path, 'Synthesizer', 'logs-model_GST_ft'))
-    os.rename(os.path.join(finetuned_model_path, 'Vocoder', 'model_GST'), os.path.join(finetuned_model_path, 'Vocoder', 'model_GST_ft'))
-    os.rename(os.path.join(finetuned_model_path, 'Vocoder', 'model_GST_ft','model_GST.pt'), os.path.join(finetuned_model_path, 'Vocoder', 'model_GST_ft','model_GST_ft.pt'))
-    
+    if not os.path.isdir(finetuned_model_path):
+        copy_tree(generic_model_path, finetuned_model_path)
+        os.rename(os.path.join(finetuned_model_path, 'Synthesizer', 'logs-model_GST'), os.path.join(finetuned_model_path, 'Synthesizer', 'logs-model_GST_ft'))
+        os.rename(os.path.join(finetuned_model_path, 'Vocoder', 'model_GST'), os.path.join(finetuned_model_path, 'Vocoder', 'model_GST_ft'))
+        os.rename(os.path.join(finetuned_model_path, 'Vocoder', 'model_GST_ft','model_GST.pt'), os.path.join(finetuned_model_path, 'Vocoder', 'model_GST_ft','model_GST_ft.pt'))
+        
 
     print("Step 1 Complete")
     print("---------------------------------------------------------")
     print('Step 2: Preprocess audio for training synthesizer')
-    syn_prep_audio(data_dir, syn_files_dir, n_processes=8, skip_existing=True)
+    # syn_prep_audio(data_dir, syn_files_dir, n_processes=8, skip_existing=True)
     print("Step 2 Complete")
     print("---------------------------------------------------------")
     print("Step 3: Get speaker embeddings from pre-processed audio for training synthesizer")
-    syn_prep_embeds(syn_files_dir, pretrained_encoder_model_path, pretrained_model_name, n_processes=8, gpu_id='0')
+    # syn_prep_embeds(syn_files_dir, pretrained_encoder_model_path, pretrained_model_name, n_processes=8, gpu_id='6') 
     print("Step 3 Complete")
     print("---------------------------------------------------------")
     print("Step 4: Finetune Synthesizer")
-    syn_train(finetuned_model_name, pretrained_model_name, syn_files_dir, finetuned_syn_model_dir, gpu_id='0')
+    syn_train(finetuned_model_name, pretrained_model_name, syn_files_dir, finetuned_syn_model_dir, gpu_id='6')
     print("Step 4 Complete")
     print("---------------------------------------------------------")
     print("Step 5: Preprocess data for training the Vocoder")
-    voc_prep(syn_files_dir, voc_files_dir, finetuned_syn_model_dir)
+    # voc_prep(syn_files_dir, voc_files_dir, finetuned_syn_model_dir)
     print("Step 5 Complete")
     print("---------------------------------------------------------")
     print("Step 6: Finetune Vocoder")
-    voc_train(pretrained_model_name + '_ft', syn_files_dir, voc_files_dir, finetuned_voc_model_dir)
+    # voc_train(pretrained_model_name + '_ft', syn_files_dir, voc_files_dir, finetuned_voc_model_dir, gpu_id='0,1')
     print("Step 6 Complete")
     print("---------------------------------------------------------")
     ## Remove data from SV2TTS directory
-    rmtree(syn_files_dir)
-    rmtree(voc_files_dir)
+    # rmtree(syn_files_dir)
+    # rmtree(voc_files_dir)
 
     print("-----------------Finetuning Completed!!----------------------")
 

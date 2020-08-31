@@ -10,12 +10,15 @@ import soundfile as sf
 from pathlib import Path
 from encoder import audio
 import librosa as lr
+import numpy as np
 
 
 os.environ["CUDA_VISIBLE_DEVICES"] = '0,1'
 
 UPLOAD_FOLDER = 'uploads'
 MODEL_FOLDER = 'trained_models'
+NOISE_FOLDER = 'uploads/Noise'
+NOISE_FILE = 'uploads/Noise/Babble.wav'
 GENERATED_AUDIO_FILE = 'uploads/ref_gen.wav'
 MODIFIED_AUDIO_FILE = 'uploads/ref_gen_modified.wav'
 REF_MELSPEC_IMG = 'uploads/ref_melspec.png'
@@ -27,6 +30,8 @@ ENC_MODULE_NAME = "model_GST"
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['NOISE_FOLDER'] = NOISE_FOLDER
+app.config['NOISE_FILE'] = NOISE_FILE
 app.config['MODEL_FOLDER'] = MODEL_FOLDER
 app.config['ENC_MODULE_NAME'] = ENC_MODULE_NAME
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024 # will limit the maximum allowed payload to 16 megabytes.
@@ -54,6 +59,7 @@ def upload_file():
     if request.method == 'GET':
         # (_, _, uploaded_files) = next(walk(app.config['UPLOAD_FOLDER']))
         (_, uploaded_files, _) = next(walk(app.config['MODEL_FOLDER']))
+        
         with open(app.config['TARGET_TEXT_FILE'], 'r') as file:
             target_text = file.read()
         return render_template('index.html', uploaded_files=uploaded_files, upload_folder = app.config['UPLOAD_FOLDER'], model_folder = app.config['MODEL_FOLDER'], target_text = target_text, synthetic_audio = "",
@@ -64,17 +70,23 @@ def upload_file():
         print(request.form)
 
         if 'target_text_form6' in request.form:
-            ref_audio, sr = lr.load(app.config['GENERATED_AUDIO_FILE'], sr=16000)
+            gen_audio, sr1 = lr.load(app.config['GENERATED_AUDIO_FILE'], sr=16000)            
+            noise_audio, sr2 = lr.load(app.config['NOISE_FILE'], sr=16000)            
             lspeed = float(request.form['speed'])
             lpitch = float(request.form['pitch'])
-            # ltempo = double(request.form['tempo'])
-            modified_audio = ref_audio
-            if (lspeed != 1):
-                modified_audio = lr.effects.time_stretch(ref_audio, lspeed)
-            if (lpitch != 0):    
-                modified_audio = lr.effects.pitch_shift(modified_audio, sr, n_steps=lpitch)
+            lnoise = float(request.form['noise'])
 
-            sf.write(app.config['MODIFIED_AUDIO_FILE'], modified_audio, sr, 'PCM_24')
+            noise_audio = np.resize(noise_audio, len(gen_audio))
+            
+            modified_audio = gen_audio
+            if (lspeed != 1):
+                modified_audio = lr.effects.time_stretch(modified_audio, lspeed)
+            if (lpitch != 0):    
+                modified_audio = lr.effects.pitch_shift(modified_audio, sr1, n_steps=lpitch)
+            if (lnoise != 0):    
+                modified_audio = modified_audio + lnoise*noise_audio
+
+            sf.write(app.config['MODIFIED_AUDIO_FILE'], modified_audio, sr1, 'PCM_24')
      
         
         if 'target_text_form2' in request.form:
@@ -94,22 +106,13 @@ def upload_file():
             enc_model_fpath=enc_model_fpath, enc_module_name=enc_module_name,
             syn_model_dir=syn_model_dir, voc_model_fpath=voc_model_fpath)
 
-            ref_melspec = audio.wav_to_mel_spectrogram(audio.preprocess_wav(ref_audio_path))
-            syn_melspec = audio.wav_to_mel_spectrogram(audio.preprocess_wav(synthesized_wav))
-
-            audio.save_melspec(ref_melspec, app.config['REF_MELSPEC_IMG'])
-            audio.save_melspec(syn_melspec, app.config['SYN_MELSPEC_IMG'])
-
-
-
             sf.write(app.config['GENERATED_AUDIO_FILE'], synthesized_wav, sample_rate, 'PCM_24')
 
 
             if(path.exists(app.config['GENERATED_AUDIO_FILE'])):
                 flash('Synthetic Audio Generated!!')
 
-            return render_template('index.html', uploaded_files=uploaded_files, upload_folder=app.config['UPLOAD_FOLDER'], model_folder=app.config['MODEL_FOLDER'], target_text=target_text, synthetic_audio=app.config['GENERATED_AUDIO_FILE'],
-            ref_melspec_img = app.config['REF_MELSPEC_IMG'], syn_melspec_img = app.config['SYN_MELSPEC_IMG'])
+            return render_template('index.html', uploaded_files=uploaded_files, upload_folder=app.config['UPLOAD_FOLDER'], model_folder=app.config['MODEL_FOLDER'], target_text=target_text, synthetic_audio=app.config['GENERATED_AUDIO_FILE'], syn_melspec_img = app.config['SYN_MELSPEC_IMG'])
 
 
         if 'target_text_form' in request.form:
@@ -118,22 +121,18 @@ def upload_file():
             file1.writelines(target_text)
             file1.close() #to change file access modes
             flash('Target text updated!!')
-            # (_, _, uploaded_files) = next(walk(app.config['UPLOAD_FOLDER']))
             (_, uploaded_files, _) = next(walk(app.config['MODEL_FOLDER']))
             with open(app.config['TARGET_TEXT_FILE'], 'r') as file:
                 target_text = file.read()
-            return render_template('index.html', uploaded_files=uploaded_files, upload_folder=app.config['UPLOAD_FOLDER'], model_folder=app.config['MODEL_FOLDER'], target_text=target_text, synthetic_audio="",
-            ref_melspec_img = app.config['REF_MELSPEC_IMG'], syn_melspec_img = app.config['SYN_MELSPEC_IMG'])
+            return render_template('index.html', uploaded_files=uploaded_files, upload_folder=app.config['UPLOAD_FOLDER'], model_folder=app.config['MODEL_FOLDER'], target_text=target_text, synthetic_audio="", syn_melspec_img = app.config['SYN_MELSPEC_IMG'])
 
         # check if the post request has the file part
         if 'file' not in request.files:
             flash('Invalid file selected')
-            # (_, _, uploaded_files) = next(walk(app.config['UPLOAD_FOLDER']))
             (_, uploaded_files, _) = next(walk(app.config['MODEL_FOLDER']))
             with open(app.config['TARGET_TEXT_FILE'], 'r') as file:
                 target_text = file.read()
-            return render_template('index.html', uploaded_files=uploaded_files, upload_folder = app.config['UPLOAD_FOLDER'], model_folder = app.config['MODEL_FOLDER'], target_text = target_text, synthetic_audio = "",
-            ref_melspec_img = app.config['REF_MELSPEC_IMG'], syn_melspec_img = app.config['SYN_MELSPEC_IMG'])
+            return render_template('index.html', uploaded_files=uploaded_files, upload_folder = app.config['UPLOAD_FOLDER'], model_folder = app.config['MODEL_FOLDER'], target_text = target_text, synthetic_audio = "", syn_melspec_img = app.config['SYN_MELSPEC_IMG'])
 
         file = request.files['file']
         # if user does not select file, browser also
@@ -147,13 +146,10 @@ def upload_file():
             filename = secure_filename(file.filename)
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(file_path)
-            # uploaded_files = [f for f in listdir(app.config['UPLOAD_FOLDER']) if isfile(join(app.config['UPLOAD_FOLDER'], f))]
-            # (_, _, uploaded_files) = next(walk(app.config['UPLOAD_FOLDER']))
             (_, uploaded_files, _) = next(walk(app.config['MODEL_FOLDER']))
             with open(app.config['TARGET_TEXT_FILE'], 'r') as file:
                 target_text = file.read()
-            return render_template('index.html', uploaded_files=uploaded_files, upload_folder = app.config['UPLOAD_FOLDER'], model_folder = app.config['MODEL_FOLDER'], target_text = target_text, synthetic_audio = None,
-            ref_melspec_img = app.config['REF_MELSPEC_IMG'], syn_melspec_img = app.config['SYN_MELSPEC_IMG'])
+            return render_template('index.html', uploaded_files=uploaded_files, upload_folder = app.config['UPLOAD_FOLDER'], model_folder = app.config['MODEL_FOLDER'], target_text = target_text, synthetic_audio = None, syn_melspec_img = app.config['SYN_MELSPEC_IMG'])
 
     return
 
