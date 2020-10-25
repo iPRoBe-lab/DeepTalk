@@ -18,11 +18,6 @@ def main(argv):
    
    input_path, output_path = argv[0], argv[1]
 
-#    os.chdir('/scratch0/chowdh51/Code/DeepTalk/DeepTalk_Deployment_lite')
-#    os.getcwd()
-#    input_path = 'Data/SampleAudio'
-#    output_path = 'Data/ProcessedAudio'
-
    training_data_directory = 'Data/LibriSpeech/train-other-custom'
 
    if (not(input_path) or not(output_path)):
@@ -52,7 +47,7 @@ def main(argv):
    print('Input path is:', input_path)
    print('Output path is:', output_path)
 
-#    split_audio_main(input_path, output_path) ## Split the audio into smaller chunks and run speech recognition on them.
+   split_audio_main(input_path, output_path) ## Split the audio into smaller chunks and run speech recognition on them.
 
    print('------------------Stage 1 Complete-------------------')
 

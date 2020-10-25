@@ -37,7 +37,7 @@ Data/SampleAudio/<speaker_name>/<fileid_subjectname_audiotitle.wav>
 ```
 Example:
 ```
-Data\SampleAudio\Vincent\1_Vincent_BedtimeStories.wav
+Data/SampleAudio/Vincent/1_Vincent_BedtimeStories.wav
 ```
 We have already created the Data/SampleAudio directory with an audio from a speaker to serve as an example.
 
@@ -47,7 +47,7 @@ Example:
 Python preprocess_audio.py Data/SampleAudio Data/ProcessedAudio
 ```
 
-3) Run train_DeepTalk.py (This will use the preprocessed audio to fine-tune the DeepTalk model)
+3) Run train_DeepTalk_step1.py (This will use the preprocessed audio to fine-tune the DeepTalk model)
 
 4) A fine-tuned model directory bearing the <speaker_name> should now appear in the trained_models directory
 

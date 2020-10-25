@@ -14,20 +14,19 @@ from pydub import AudioSegment
 from pydub.silence import split_on_silence 
 from shutil import copyfile
 
+
 # a function that splits the audio file into chunks 
 # and applies speech recognition 
 def silence_based_conversion(audio_path = "alice-medium.wav", output_dir = './chunks' , silence_length = 0.75): 
 
 	# open the audio file stored in 
 	# the local system as a wav file. 
-	# song = AudioSegment.from_wav(path)
     file_name = output_dir.split('/')[-1]
 
     song, sampling_rate = lr.load(audio_path, sr=16000)
 
 	# split track where silence is 0.5 seconds 
 	# or more and get chunks 
-	# chunks = split_on_silence(song, min_silence_len=250, silence_thresh=40)
     chunks = lr.effects.split(y=song, frame_length=int(sampling_rate * silence_length), top_db=20)
 
     
@@ -56,19 +55,17 @@ def silence_based_conversion(audio_path = "alice-medium.wav", output_dir = './ch
             file1.close()
         
         except sr.UnknownValueError: 
-            print("Google Speech Recognition could not understand audio")
+            print("Speech Recognition could not understand audio")
             os.remove(chunk_file_name)
             print(chunk_file_name+" not written")
         
         except sr.RequestError as e: 
-            print("Could not request results from Google Speech Recognition service; {0}".format(e)) 
+            print("Could not request results from Speech Recognition service; {0}".format(e)) 
     
     os.chdir(current_dir)
 
 def split_audio_main(input_root_path, output_root_path):
 
-    # max_limit = 15
-    # i = 0
 
     for root, speaker_dirs, files in os.walk(input_root_path):
         for speaker_dir in speaker_dirs:            
@@ -76,9 +73,6 @@ def split_audio_main(input_root_path, output_root_path):
             for root, dirs, files in os.walk(speaker_dir_path):
                 for filename in tqdm(files):
                     if os.path.splitext(filename)[1] == ".wav":
-                        # i = i + 1
-                        # if (i > max_limit):
-                        #     break
                         wav_path = os.path.join(speaker_dir_path,filename)
                         output_dir = str(Path(wav_path).parent).replace(input_root_path, output_root_path)
                         f_name = os.path.splitext(filename)[0]

@@ -1,5 +1,5 @@
 ## Sample usage:
-# Python train_DeepTalk.py Data/LibriSpeech/train-other-custom/<speaker_name>
+# Python train_DeepTalk_step1.py Data/LibriSpeech/train-other-custom/<speaker_name>
 
 from distutils.dir_util import copy_tree
 from shutil import copyfile
@@ -12,14 +12,11 @@ from vocoder_preprocess import run_custom as voc_prep
 from vocoder_train import run_custom as voc_train
 from shutil import rmtree
 import time
+
 def main(argv):
 
-    # print(argv)
    
     input_path = argv[0]
-    # input_path = '/Users/anuragchowdhury/Desktop/DeepTalk/Deployment_lite/Data/LibriSpeech/train-other-custom/Obama2'
-    # input_path = '/scratch0/chowdh51/Code/DeepTalk/DeepTalk_Deployment_lite/Data/LibriSpeech/train-other-custom/GordonSmith'
-
 
     speaker_name = ntpath.basename(input_path)
     data_dir = os.path.abspath('Data')
@@ -31,6 +28,8 @@ def main(argv):
     syn_files_dir = os.path.join(data_dir, 'SV2TTS', 'synthesizer_' + finetuned_model_name)    
     voc_files_dir = os.path.join(data_dir, 'SV2TTS', 'vocoder_' + finetuned_model_name)
 
+    
+    
     if not os.path.exists(syn_files_dir):
         os.makedirs(syn_files_dir)
     if not os.path.exists(finetuned_syn_model_dir):
@@ -71,33 +70,35 @@ def main(argv):
     print("Step 1 Complete")
     print("---------------------------------------------------------")
     print('Step 2: Preprocess audio for training synthesizer')
-    # syn_prep_audio(data_dir, syn_files_dir, n_processes=8, skip_existing=True)
+    syn_prep_audio(data_dir, syn_files_dir, n_processes=8, skip_existing=True)
     print("Step 2 Complete")
     print("---------------------------------------------------------")
     print("Step 3: Get speaker embeddings from pre-processed audio for training synthesizer")
-    # syn_prep_embeds(syn_files_dir, pretrained_encoder_model_path, pretrained_model_name, n_processes=8, gpu_id='6') 
+    syn_prep_embeds(syn_files_dir, pretrained_encoder_model_path, pretrained_model_name, n_processes=8, gpu_id='0') 
     print("Step 3 Complete")
+    print("Run train_DeepTalk_step2.py now...")
     print("---------------------------------------------------------")
     print("Step 4: Finetune Synthesizer")
-    syn_train(finetuned_model_name, pretrained_model_name, syn_files_dir, finetuned_syn_model_dir, gpu_id='6')
+    syn_train(finetuned_model_name, pretrained_model_name, syn_files_dir, finetuned_syn_model_dir, gpu_id='0')
     print("Step 4 Complete")
     print("---------------------------------------------------------")
-    print("Step 5: Preprocess data for training the Vocoder")
-    # voc_prep(syn_files_dir, voc_files_dir, finetuned_syn_model_dir)
-    print("Step 5 Complete")
-    print("---------------------------------------------------------")
-    print("Step 6: Finetune Vocoder")
+    # print("Step 5: Preprocess data for training the Vocoder")
+    # # voc_prep(syn_files_dir, voc_files_dir, finetuned_syn_model_dir)
+    # print("Step 5 Complete")
+    # print("---------------------------------------------------------")
+    # print("Step 6: Finetune Vocoder")
     # voc_train(pretrained_model_name + '_ft', syn_files_dir, voc_files_dir, finetuned_voc_model_dir, gpu_id='0,1')
-    print("Step 6 Complete")
-    print("---------------------------------------------------------")
-    ## Remove data from SV2TTS directory
+    # print("Step 6 Complete")
+    # print("---------------------------------------------------------")
+    # ## Remove data from SV2TTS directory
     # rmtree(syn_files_dir)
     # rmtree(voc_files_dir)
 
-    print("-----------------Finetuning Completed!!----------------------")
+    print("-----------------Now run train_DeepTalk_step2.py ----------------------")
 
 
     ## Empty the SV2TTS folder
 
 if __name__ == "__main__":
     main(sys.argv[1:])
+    # main()
