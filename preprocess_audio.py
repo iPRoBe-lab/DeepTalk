@@ -41,7 +41,8 @@ def main(argv):
    input_path = os.path.abspath(input_path)
    output_path = os.path.abspath(output_path)
    training_data_directory = os.path.abspath(training_data_directory)
-
+   if not os.path.exists(training_data_directory):
+       os.makedirs(training_data_directory)
    print('----------------------------------------------------')
    print("Stage 1: Splitting input audio into smaller chunks and extracting text transcripts")
    print('Input path is:', input_path)
@@ -96,10 +97,9 @@ def main(argv):
 
    os.chdir(current_dir)
    print('------------------Stage 2 Complete-------------------')
-
    print('Run the following command to start fine-tuning the model on the pre-processed data:')
-   print('Python train_DeepTalk.py ' + speaker_dir_path)
-   print('----------------------------------------------------')
+   print('python train_DeepTalk_step1.py ' + speaker_dir_path)
+   print('------
 
 
 if __name__ == "__main__":

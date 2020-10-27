@@ -94,7 +94,10 @@ def main(argv):
     # rmtree(syn_files_dir)
     # rmtree(voc_files_dir)
 
-    print("-----------------Now run train_DeepTalk_step2.py ----------------------")
+    print("----------------------------------------------------------")
+    print('Run the following command to continue fine-tuning the model on the pre-processed data:')
+    print('python train_DeepTalk_step2.py ' + input_path)
+    print('----------------------------------------------------')
 
 
     ## Empty the SV2TTS folder
