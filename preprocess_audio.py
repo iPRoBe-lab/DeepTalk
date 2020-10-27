@@ -99,7 +99,7 @@ def main(argv):
    print('------------------Stage 2 Complete-------------------')
    print('Run the following command to start fine-tuning the model on the pre-processed data:')
    print('python train_DeepTalk_step1.py ' + speaker_dir_path)
-   print('------
+   print('-----------------------------------------------------')
 
 
 if __name__ == "__main__":
