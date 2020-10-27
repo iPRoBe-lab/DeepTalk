@@ -61,7 +61,8 @@ pip install -r requirements.txt
 [Montreal-Forced-Aligner](https://github.com/MontrealCorpusTools/Montreal-Forced-Aligner/releases/)
 Please note: Montreal-Forced-Aligner sometimes fails to run after installation. Please refer [here](https://github.com/MontrealCorpusTools/Montreal-Forced-Aligner/issues/109) for some of the most common issues faced by us and their possible solutions.
 
-** Running the DeepTalk GUI to generate synthetic audio using pre-trained models received from the code maintainer
+**Running the DeepTalk GUI to generate synthetic audio using pre-trained models received from the code maintainer**
+
 Note: You should already be inside 'DeepTalk-Deployment' directory with 'deeptalk' conda environment activated.
 
 1) Execute the following two commands to run the GUI prototype
