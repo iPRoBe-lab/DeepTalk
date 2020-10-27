@@ -19,7 +19,8 @@ def main(argv):
     input_path = argv[0]
 
     speaker_name = ntpath.basename(input_path)
-    data_dir = os.path.abspath('Data')
+    # data_dir = os.path.abspath('Data')
+    data_dir = 'Data'
     pretrained_model_name = 'model_GST'
     finetuned_model_name = pretrained_model_name + '_ft_' + speaker_name.lower()
     pretrained_encoder_model_path = os.path.join('trained_models', speaker_name, 'Encoder', pretrained_model_name + '.pt')
@@ -32,12 +33,12 @@ def main(argv):
     
     if not os.path.exists(syn_files_dir):
         os.makedirs(syn_files_dir)
-    if not os.path.exists(finetuned_syn_model_dir):
-        os.makedirs(finetuned_syn_model_dir)
+    # if not os.path.exists(finetuned_syn_model_dir):
+    #     os.makedirs(finetuned_syn_model_dir)
     if not os.path.exists(voc_files_dir):
         os.makedirs(voc_files_dir)
-    if not os.path.exists(finetuned_voc_model_dir):
-        os.makedirs(finetuned_voc_model_dir)
+    # if not os.path.exists(finetuned_voc_model_dir):
+    #     os.makedirs(finetuned_voc_model_dir)
 
     
     ##
