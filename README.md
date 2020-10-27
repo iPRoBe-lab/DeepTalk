@@ -79,7 +79,13 @@ http://localhost:5000/
 
 **Finetuning the DeepTalk model for a target speaker**
 
-1) Place an audio wave file for fine-tuning the pre-trained DeepTalk Model in Data/SampleAudio directory as follows:
+1) Create the Data/SampleAudio directory in the 'DeepTalk-Deployment' directory, as follows:
+```
+mkdir Data
+mkdir Data/SampleAudio
+```
+
+2) Place an audio wave file for fine-tuning the pre-trained DeepTalk Model in Data/SampleAudio directory as follows:
 ```
 Data/SampleAudio/<speaker_name>/<fileid_subjectname_audiotitle.wav>
 ```
@@ -87,23 +93,22 @@ Example:
 ```
 Data/SampleAudio/Speaker1/1_Speaker1_BroadcastIndustry.wav
 ```
-We have already created the Data/SampleAudio directory with an audio from a speaker to serve as an example.
 
-2) Run [Python preprocess_audio.py <input_directory> <output_directory>](This will preprocess the audio from previous step to make it compatible for fine-tuning the DeepTalk model)
+3) Run [Python preprocess_audio.py <input_directory> <output_directory>](This will preprocess the audio from previous step to make it compatible for fine-tuning the DeepTalk model)
 Example: 
 ```
 python preprocess_audio.py Data/SampleAudio Data/ProcessedAudio
 ```
 The processed audio will be saved at Data/LibriSpeech/train-other-custom/<speaker_name>
 
-3) Run train_DeepTalk_step1.py <preprocessed_audio_directory> (This will use the preprocessed audio to fine-tune the Synthesizer of the DeepTalk model)
+4) Run train_DeepTalk_step1.py <preprocessed_audio_directory> (This will use the preprocessed audio to fine-tune the Synthesizer of the DeepTalk model)
 ```
 python train_DeepTalk_step1.py Data/LibriSpeech/train-other-custom/Speaker1
 ```
 
-4) Run train_DeepTalk_step2.py <preprocessed_audio_directory> (This will use the preprocessed audio to fine-tune the Vocoder of the DeepTalk model)
+5) Run train_DeepTalk_step2.py <preprocessed_audio_directory> (This will use the preprocessed audio to fine-tune the Vocoder of the DeepTalk model)
 ```
 python train_DeepTalk_step2.py Data/LibriSpeech/train-other-custom/Speaker1
 ```
 
-5) A fine-tuned model directory bearing the <speaker_name> should now appear in the trained_models directory
+6) A fine-tuned model directory bearing the <speaker_name> should now appear in the trained_models directory
