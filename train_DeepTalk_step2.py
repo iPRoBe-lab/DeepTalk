@@ -72,7 +72,7 @@ def main(argv):
     print("Step 5 Complete")
     print("---------------------------------------------------------")
     print("Step 6: Finetune Vocoder")
-    voc_train(pretrained_model_name + '_ft', syn_files_dir, voc_files_dir, finetuned_voc_model_dir, gpu_id='0')
+    voc_train(pretrained_model_name + '_ft', syn_files_dir, voc_files_dir, finetuned_voc_model_dir)
     print("Step 6 Complete")
     print("---------------------------------------------------------")
     # Remove data from SV2TTS directory
