@@ -58,7 +58,8 @@ pip install -r requirements.txt
 ```
 
 7) We have included a copy of Montreal-Forced-Aligner (both for Linux and Mac OS) with this repository. However, it is highly recommended to replace them with their latest release from
-[Montreal-Forced-Aligner](https://github.com/MontrealCorpusTools/Montreal-Forced-Aligner/releases/)
+[Montreal-Forced-Aligner](https://github.com/MontrealCorpusTools/Montreal-Forced-Aligner/releases/).
+
 Please note: Montreal-Forced-Aligner sometimes fails to run after installation. Please refer [here](https://github.com/MontrealCorpusTools/Montreal-Forced-Aligner/issues/109) for some of the most common issues faced by us and their possible solutions.
 
 **Running the DeepTalk GUI to generate synthetic audio using pre-trained models received from the code maintainer**
