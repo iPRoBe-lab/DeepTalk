@@ -109,19 +109,18 @@ We have included few sample audios (through the *trained_model.zip*) following t
 ls Data/SampleAudio/Speaker1/
 ```
 
-3) Run *preprocess_audio.py <input_directory> <output_directory>* to preprocess the audio from previous step to make it compatible for fine-tuning the DeepTalk model
-Example: 
+3) Run *preprocess_audio.py <input_directory> <output_directory>* to preprocess the audio from previous step to make it compatible for fine-tuning the DeepTalk model.
 ```
 python preprocess_audio.py Data/SampleAudio Data/ProcessedAudio
 ```
 The processed audio will be saved at *Data/LibriSpeech/train-other-custom/<speaker_name>*
 
-4) Run train_DeepTalk_step1.py <preprocessed_audio_directory> (This will use the preprocessed audio to fine-tune the Synthesizer of the DeepTalk model)
+4) Run *train_DeepTalk_step1.py <preprocessed_audio_directory>* to use the preprocessed audio to fine-tune the Synthesizer of the DeepTalk model.
 ```
 python train_DeepTalk_step1.py Data/LibriSpeech/train-other-custom/Speaker1
 ```
 
-5) Run train_DeepTalk_step2.py <preprocessed_audio_directory> (This will use the preprocessed audio to fine-tune the Vocoder of the DeepTalk model)
+5) Run *train_DeepTalk_step2.py <preprocessed_audio_directory>* to use the preprocessed audio to fine-tune the Vocoder of the DeepTalk model.
 ```
 python train_DeepTalk_step2.py Data/LibriSpeech/train-other-custom/Speaker1
 ```
