@@ -96,19 +96,17 @@ http://localhost:5000/
 
 **Finetuning the DeepTalk model for a target speaker**
 
-1) Create the Data/SampleAudio directory in the 'DeepTalk-Deployment' directory, as follows:
-```
-mkdir Data
-mkdir Data/SampleAudio
-```
-
-2) Place an audio wave file for fine-tuning the pre-trained DeepTalk Model in Data/SampleAudio directory as follows:
+1) The DeepTalk model can be finetuned to mimic the voice of a target speaker of your choice. For this process, you will need to place high quality audio wave files containing speech from the target speaker in Data/SampleAudio directory as follows:
 ```
 Data/SampleAudio/<speaker_name>/<fileid_subjectname_audiotitle.wav>
 ```
 Example:
 ```
 Data/SampleAudio/Speaker1/1_Speaker1_BroadcastIndustry.wav
+```
+We have included few sample audios in the trained_model.zip following the directory format specified above, to serve as a reference. These sample audios can be listed using the following command:
+```
+ls Data/SampleAudio/Speaker1/
 ```
 
 3) Run [Python preprocess_audio.py <input_directory> <output_directory>](This will preprocess the audio from previous step to make it compatible for fine-tuning the DeepTalk model)
