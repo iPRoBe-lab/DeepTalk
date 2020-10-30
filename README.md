@@ -62,7 +62,6 @@ unzip trained_models.zip
     
     3.2) Alternatively, you can also run the [install_MFA_linux.sh](./install_MFA_linux.sh) script (only works for Linux machines) to automatically download and install Montreal-Forced-Aligner. This script also fixes some of the most common installation [issues](https://github.com/MontrealCorpusTools/Montreal-Forced-Aligner/issues/109) associated with running Montreal-Forced-Aligner on linux machines.
     ```
-    chmod +x install_MFA_linux.sh
     ./install_MFA_linux.sh
     ```
 
