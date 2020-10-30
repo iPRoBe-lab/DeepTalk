@@ -60,7 +60,7 @@ unzip trained_models.zip
 
     3.1) Download and install the Montreal-Forced-Aligner following the instructions [here](https://montreal-forced-aligner.readthedocs.io/en/latest/installation.html). We have included a copy of Montreal-Forced-Aligner (both for Linux and Mac OS) with this repository to serve as a template for the directory structure expected by the DeepTalk implementation. Please note that the *librispeech-lexicon.txt* file included in both the montreal_forced_aligned_mac and montreal_forced_aligned_linux are important for this project and should be retained in this final installation of Montreal-Forced-Aligner.
     
-    3.2) Alternatively, you can also run the following script (only works for Linux machines) to automatically download and install Montreal-Forced-Aligner. This script also fixes some of the most common installation [issues](https://github.com/MontrealCorpusTools/Montreal-Forced-Aligner/issues/109) associated with running Montreal-Forced-Aligner on linux machines.
+    3.2) Alternatively, you can also run the [install_MFA_linux.sh](./install_MFA_linux.sh) script (only works for Linux machines) to automatically download and install Montreal-Forced-Aligner. This script also fixes some of the most common installation [issues](https://github.com/MontrealCorpusTools/Montreal-Forced-Aligner/issues/109) associated with running Montreal-Forced-Aligner on linux machines.
     ```
     chmod +x install_MFA_linux.sh
     ./install_MFA_linux.sh
