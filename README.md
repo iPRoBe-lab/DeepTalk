@@ -129,4 +129,5 @@ python train_DeepTalk_step2.py Data/LibriSpeech/train-other-custom/Speaker1
 
 
 **Acknowledgement**
+
 Portions of this implmentation are based on [this](https://github.com/CorentinJ/Real-Time-Voice-Cloning) repository.
