@@ -126,3 +126,7 @@ python train_DeepTalk_step2.py Data/LibriSpeech/train-other-custom/Speaker1
 ```
 
 6) A fine-tuned model directory bearing the <speaker_name> should now appear in the trained_models directory
+
+
+**Acknowledgement**
+Portions of this implmentation are based on [this](https://github.com/CorentinJ/Real-Time-Voice-Cloning) repository.
