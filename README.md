@@ -38,46 +38,46 @@ unzip trained_models.zip
 
 1) The model was implemented in PyTorch 1.3.1 and tensorflow 1.14 using Python 3.6.8 and may be compatible with different versions of PyTorch, tensorflow, and Python, but it has not been tested. (The GPU versions of pytorch and tensorflow is recommended for faster training and inference)
 
-1.1) Install anaconda python distribution from https://www.anaconda.com/products/individual
+    1.1) Install anaconda python distribution from https://www.anaconda.com/products/individual
 
-1.2) Create an anaconda environment called 'deeptalk'
-```
-conda create -n deeptalk python=3.6.8
-```
-```
-Type [y] when prompted to Proceed([y]/n)
-```
-1.3) Activate the deeptalk python environment
-```
-conda activate deeptalk
-```
+    1.2) Create an anaconda environment called 'deeptalk'
+    ```
+    conda create -n deeptalk python=3.6.8
+    ```
+    Type [y] when prompted to Proceed([y]/n)
+    
+    1.3) Activate the deeptalk python environment
+    ```
+    conda activate deeptalk
+    ```
 
 2) Additional requirements are listed in the [./requirements.txt](./requirements.txt) file. Install them as follows:
-```
-pip install -r requirements.txt
-```
+    ```
+    pip install -r requirements.txt
+    ```
 
-7) We have included a copy of Montreal-Forced-Aligner (both for Linux and Mac OS) with this repository. However, it is highly recommended to replace them with their latest release from
-[Montreal-Forced-Aligner](https://github.com/MontrealCorpusTools/Montreal-Forced-Aligner/releases/).Please note: Montreal-Forced-Aligner sometimes fails to run after installation. Please refer [here](https://github.com/MontrealCorpusTools/Montreal-Forced-Aligner/issues/109) for some of the most common issues faced by us and their possible solutions.
+3) Now, we need to install [Montreal-Forced-Aligner](https://montreal-forced-aligner.readthedocs.io/en/latest/). For this project it could be done in the following two ways:
 
-8) Alternatively, you can also run the following script (only works for Linux machines) to automatically download and install Montreal-Forced-Aligner. This script also fixes some of the most common installation [issues](https://github.com/MontrealCorpusTools/Montreal-Forced-Aligner/issues/109).
-```
-chmod +x install_MFA_linux.sh
-./install_MFA_linux.sh
-```
+    3.1) Download and install the Montreal-Forced-Aligner following the instructions [here](https://montreal-forced-aligner.readthedocs.io/en/latest/installation.html). We have included a copy of Montreal-Forced-Aligner (both for Linux and Mac OS) with this repository to serve as a template for the directory structure expected by the DeepTalk implementation. Please note that the *librispeech-lexicon.txt* file included in both the montreal_forced_aligned_mac and montreal_forced_aligned_linux are important for this project and should be retained in this final installation of Montreal-Forced-Aligner.
+    
+    3.2) Alternatively, you can also run the following script (only works for Linux machines) to automatically download and install Montreal-Forced-Aligner. This script also fixes some of the most common installation [issues](https://github.com/MontrealCorpusTools/Montreal-Forced-Aligner/issues/109) associated with running Montreal-Forced-Aligner on linux machines.
+    ```
+    chmod +x install_MFA_linux.sh
+    ./install_MFA_linux.sh
+    ```
 
-9) Now, run the following command to ensure Montreal-Forced-Alignerwas installed correctly and is working fine.
-```
-montreal_forced_aligner_linux/bin/mfa_align
-```
-You should get the following output if everything is working fine:
-```
-usage: mfa_align [-h] [-s SPEAKER_CHARACTERS] [-b BEAM] [-t TEMP_DIRECTORY]
-                 [-j NUM_JOBS] [-v] [-n] [-c] [-d] [-e] [-i] [-q]
-                 corpus_directory dictionary_path acoustic_model_path
-                 output_directory
-mfa_align: error: the following arguments are required: corpus_directory, dictionary_path, acoustic_model_path, output_directory
-```
+    3.3) Now, run the following command to ensure Montreal-Forced-Alignerwas installed correctly and is working fine.
+    ```
+    montreal_forced_aligner_linux/bin/mfa_align
+    ```
+    You should get the following output if everything is working fine:
+    ```
+    usage: mfa_align [-h] [-s SPEAKER_CHARACTERS] [-b BEAM] [-t TEMP_DIRECTORY]
+                    [-j NUM_JOBS] [-v] [-n] [-c] [-d] [-e] [-i] [-q]
+                    corpus_directory dictionary_path acoustic_model_path
+                    output_directory
+    mfa_align: error: the following arguments are required: corpus_directory, dictionary_path, acoustic_model_path, output_directory
+    ```
 
 **Running the DeepTalk GUI to generate synthetic audio using pre-trained models received from the code maintainer**
 
