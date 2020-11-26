@@ -2,7 +2,7 @@ DeepTalk
 ===============================
 
 DeepTalk is a deep-learning based vocal style transfer model developed by A. Chowdhury, A. Ross, and P. David, at Michigan State University.
-The model requires a <reference audio> from a <target speaker> and a <sample text> to synthesis speech audio that mimics the vocal identity of the <target speaker> uttering the <sample text>. 
+The model requires a reference audio from a target speaker and a sample text to synthesize speech audio that mimics the vocal identity of the target speaker uttering the sample text. 
 
 ![DeepTalk Model](/images/DeepTalk.png)
 
@@ -130,4 +130,4 @@ python train_DeepTalk_step2.py Data/LibriSpeech/train-other-custom/Speaker1
 
 **Acknowledgement**
 
-Portions of this implmentation are based on [this](https://github.com/CorentinJ/Real-Time-Voice-Cloning) repository.
+Portions of this implementation are based on [this](https://github.com/CorentinJ/Real-Time-Voice-Cloning) repository.
