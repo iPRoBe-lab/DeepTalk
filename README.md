@@ -1,6 +1,16 @@
 DeepTalk
 ===============================
 
+PyTorch implementation of the DeepTalk model described in *DeepTalk: Vocal Style Encoding for Speaker Recognition and Speech Synthesis* by A. Chowdhury, A. Ross, and P. David. Accepted for publication in IEEE International Conference on Acoustics, Speech and Signal Processing 2021 (ICASSP-2021).
+
+## Research Article
+
+[Anurag Chowdhury](https://github.com/ChowdhuryAnurag), and [Arun Ross](http://www.cse.msu.edu/~rossarun/), *DeepTalk: Vocal Style Encoding for Speaker Recognition and Speech Synthesis*, IEEE International Conference on Acoustics, Speech and Signal Processing (2021).  
+
+- arXiv: [https://arxiv.org/abs/2012.05084](https://arxiv.org/abs/2012.05084)
+
+## Description
+
 DeepTalk is a deep-learning based vocal style transfer model developed by A. Chowdhury, A. Ross, and P. David, at Michigan State University.
 The model requires a reference audio from a target speaker and a sample text to synthesize speech audio that mimics the vocal identity of the target speaker uttering the sample text. 
 
@@ -131,3 +141,15 @@ python train_DeepTalk_step2.py Data/LibriSpeech/train-other-custom/Speaker1
 **Acknowledgement**
 
 Portions of this implementation are based on [this](https://github.com/CorentinJ/Real-Time-Voice-Cloning) repository.
+
+## Citation
+If you use this repository then please cite:
+
+```bibtex
+@InProceedings{chowdhDeepTalk21,
+  author       = "Chowdhury, A. and Ross, A. and David, P.",
+  title        = "DeepTalk: Vocal Style Encoding for Speaker Recognition and Speech Synthesis",
+  booktitle    = "ICASSP",
+  year         = "2021",
+}
+```
