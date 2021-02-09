@@ -1,11 +1,11 @@
 DeepTalk
 ===============================
 
-PyTorch implementation of the DeepTalk model described in *DeepTalk: Vocal Style Encoding for Speaker Recognition and Speech Synthesis* by A. Chowdhury, A. Ross, and P. David. Accepted for publication in IEEE International Conference on Acoustics, Speech and Signal Processing 2021 (ICASSP-2021).
+PyTorch implementation of the DeepTalk model described in *DeepTalk: Vocal Style Encoding for Speaker Recognition and Speech Synthesis* by A. Chowdhury, A. Ross, and P. David in IEEE International Conference on Acoustics, Speech and Signal Processing 2021 (ICASSP-2021).
 
 ## Research Article
 
-[Anurag Chowdhury](https://github.com/ChowdhuryAnurag), and [Arun Ross](http://www.cse.msu.edu/~rossarun/), *DeepTalk: Vocal Style Encoding for Speaker Recognition and Speech Synthesis*, IEEE International Conference on Acoustics, Speech and Signal Processing (2021).  
+[Anurag Chowdhury](https://github.com/ChowdhuryAnurag), [Arun Ross](http://www.cse.msu.edu/~rossarun/), and [Prabu David](https://comartsci.msu.edu/our-people/prabu-david), *DeepTalk: Vocal Style Encoding for Speaker Recognition and Speech Synthesis*, IEEE International Conference on Acoustics, Speech and Signal Processing (2021).  
 
 - arXiv: [https://arxiv.org/abs/2012.05084](https://arxiv.org/abs/2012.05084)
 
