@@ -75,7 +75,7 @@ unzip trained_models.zip
     ./install_MFA_linux.sh
     ```
 
-    3.3) Now, run the following command to ensure Montreal-Forced-Alignerwas installed correctly and is working fine.
+    3.3) Now, run the following command to ensure Montreal-Forced-Aligner was installed correctly and is working fine.
     ```
     montreal_forced_aligner_linux/bin/mfa_align
     ```
